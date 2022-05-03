@@ -1,36 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e87905af-9e7e-458d-9463-af1252a83dfc" name="Default Changelist" comment="" />
+    <list default="true" id="ac0ea90c-406d-4db5-8710-b327e6386bb4" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectId" id="28eHcvbHq4JLhAVjdGkhNJBbjIc" />
+  <component name="ProjectId" id="28eHfPrxDII6OnyQ5GsGJuK6JJE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/NQueens" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Run" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="NQueens" />
+      <module name="NQueens" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e87905af-9e7e-458d-9463-af1252a83dfc" name="Default Changelist" comment="" />
-      <created>1651570213787</created>
+      <changelist id="ac0ea90c-406d-4db5-8710-b327e6386bb4" name="Default Changelist" comment="" />
+      <created>1651570233550</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1651570213787</updated>
+      <updated>1651570233550</updated>
     </task>
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1651570232204">
+    <state x="414" y="174" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1651570704540">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570232204" />
+    <state x="414" y="174" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570704540" />
+    <state x="689" y="321" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1651570696601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="321" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570696601" />
+    <state x="740" y="261" key="FileChooserDialogImpl" timestamp="1651570679563">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="261" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570679563" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1651570973264">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570973264" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1651570973264">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570973264" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1651570973264">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570973264" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1651570973264">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570973264" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1651570684092">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040/-1080.-402.1080.1920@0.0.1920.1040" timestamp="1651570684092" />
   </component>
 </project>
