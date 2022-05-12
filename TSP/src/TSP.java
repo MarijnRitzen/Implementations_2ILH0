@@ -7,7 +7,7 @@ public class TSP {
 		String dataset = "Burma"; // choose the dataset
 		TSPInstance inst = new TSPInstance("data/" + dataset + ".txt"); // load the problem instance
 		TSPSolution sol = new TSPSolution(inst, true); // initialize a (random) solution
-		//sol.computeGreedy(); // run the greedy algorithm
+		sol.computeGreedy(); // run the greedy algorithm
 		//firstIterativeImprovementSwap(inst, sol); // perform iterative improvement
 		//firstIterativeImprovement2OPT(inst, sol); // perform iterative improvement
 		System.out.println("Cost = " + sol.getCost()); // output the cost
