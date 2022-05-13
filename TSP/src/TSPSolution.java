@@ -123,7 +123,25 @@ public class TSPSolution {
 	public void apply2OPT(int i, int j) {
 		
 		// TODO
-		
+		ArrayList<Integer> newSol = new ArrayList<>();
+		//take all edges until i and add them to new solution
+		for (int a = 0; a < i-1; a++) {
+			newSol.add(a, perm.get(a));
+		}
+		newSol.add(j); // add first node of second edge
+		//add edges from i to j in reverse order
+		int dec = 0;
+		for (int b = i; b <= j ; b++) {
+			newSol.add(b, perm.get(j - dec));
+			dec++;
+		}
+
+		//take remaining nodes between j and i
+		for (int c = j+1; c < N; c++) {
+			newSol.add(c, perm.get(c));
+		}
+
+		perm = newSol;
 	}
 	
 	public void undo2OPT(int i, int j) {
