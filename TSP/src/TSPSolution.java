@@ -57,7 +57,6 @@ public class TSPSolution {
 				cost += Pos.distance(instance.points.get(solution.get(i)), instance.points.get(solution.get(i + 1)));
 			}
 		}
-		System.out.println(cost);
 		return cost;
 	}
 
