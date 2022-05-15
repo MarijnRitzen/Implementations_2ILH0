@@ -68,6 +68,9 @@ public class PizzaSolution {
 	// copy the solution (if you want to keep track of the best solution found)
 	public PizzaSolution copy() {
 		PizzaSolution sol = new PizzaSolution(instance, false);
+		for (int i = 0; i < N; i++) {
+			sol.nConflicts[i] = nConflicts[i];
+		}
 		for (int i = 0; i < M; i++) {
 			sol.onPizza[i] = onPizza[i];
 		}
@@ -122,10 +125,17 @@ public class PizzaSolution {
 	}
 	
 	
-	// compute the smoothed cost of a solution (you may add parameters to the function)
+	// Computes the smoothed cost of a solution. The returned cost will be the number of orders if there are no conflicts.
+	// Otherwise it will be between 0 and < 0.5 times the number of orders depending on the fraction of ingredients that
+	// are wrong
 	public double getSmoothCost() {
-		
-		// TODO
+		cost = 0;
+
+		for (int j = 0; j < N; j++) {
+			double fractionIncorrect = nConflicts[j] / (double)(instance.prefs.get(j).getHates().size() + instance.prefs.get(j).getLikes().size());
+			cost += nConflicts[j] == 0 ? instance.prefs.get(j).getNrOrders() :
+					(int)(instance.prefs.get(j).getNrOrders() * (1 - fractionIncorrect) / 3);
+		}
 		
 		return cost;
 	}
