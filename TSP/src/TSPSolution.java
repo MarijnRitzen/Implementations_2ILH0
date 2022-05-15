@@ -48,15 +48,16 @@ public class TSPSolution {
 	/*
 	 * Calculates total cost for trial solution for greedy algorithm format
 	 */
-	public double getCostGreedy(ArrayList<Integer> trialSol) {
+	public double getCostGreedy(ArrayList<Integer> solution) {
 		double cost = 0;
-		for (int i = 0; i < trialSol.size(); i++) {
-			if (i + 1 >= trialSol.size()) {
-				cost += Pos.distance(instance.points.get(perm.get(i)), instance.points.get(perm.get(0)));
+		for (int i = 0; i < solution.size(); i++) {
+			if (i + 1 >= solution.size()) {
+				cost += Pos.distance(instance.points.get(solution.get(i)), instance.points.get(solution.get(0)));
 			} else {
-				cost += Pos.distance(instance.points.get(perm.get(i)), instance.points.get(perm.get(i + 1)));
+				cost += Pos.distance(instance.points.get(solution.get(i)), instance.points.get(solution.get(i + 1)));
 			}
 		}
+		System.out.println(cost);
 		return cost;
 	}
 
@@ -67,9 +68,8 @@ public class TSPSolution {
 	}
 
 	// greedy algorithm that starts forming a tour with two random points and repeatedly inserts a random point in the best possible place in the tour
-	public ArrayList<Integer> computeGreedy() {
+	public void computeGreedy() {
 
-		// TODO
 		ArrayList<Integer> solution = new ArrayList<>();
 
 		Random rand = new Random();
@@ -83,38 +83,39 @@ public class TSPSolution {
 		solution.add(k);
 		solution.add(l);
 
-		ArrayList<Integer> previousSol = new ArrayList<>();
-		previousSol = copyList(previousSol, solution);
-		ArrayList<Integer> trialSol = new ArrayList<>();
-		ArrayList<Integer> bestSol = new ArrayList<>();
-		double bestTotalCost;
-		double newTotalCost;
+		double bestCost, newCost;
+		int indexToPlace = 0; // Initialize to get rid of "might not be initialized" error
+		while (solution.size() < N) { // While solution contains less elements than there are points
+			bestCost = Double.MAX_VALUE;
 
+			// Get a random point that is not included yet
+			int randomPoint;
+			do {
+				randomPoint = rand.nextInt(N);
+			} while (solution.contains(randomPoint));
 
-		while (bestSol.size() < N) { //while solution contains less elements than there are points
-			bestTotalCost = 100000000;
+			// Loop over possible insertions and get the best one
+			for (int pos = 0; pos < solution.size(); pos++) {
 
+				//try new position
+				solution.add(pos, randomPoint);
 
-			for (int i = 0; i < N; i++) {//loop over elements
-				if (!previousSol.contains(i)){ //solution does not already contain element
-					for (int j = 0; j < previousSol.size(); j++) { //loop over possible insertions
-						trialSol = copyList(trialSol, previousSol);
-
-						//try new position
-						trialSol.add(j, i);
-						newTotalCost = getCostGreedy(trialSol);
-						if (newTotalCost < bestTotalCost) {
-							bestTotalCost = newTotalCost;
-							bestSol = copyList(bestSol, trialSol);
-						}
-					}
+				// Calculate the cost
+				newCost = getCostGreedy(solution);
+				if (newCost < bestCost) {
+					bestCost = newCost;
+					indexToPlace = pos;
 				}
-			}
-			previousSol = copyList(previousSol, bestSol);
-		}
-		solution = bestSol;
-		return solution;
 
+				// Remove it afterwards
+				solution.remove(pos);
+			}
+
+			// Finally add the new point for good
+			solution.add(indexToPlace, randomPoint);
+		}
+
+		this.perm = solution;
 }
 	
 	
