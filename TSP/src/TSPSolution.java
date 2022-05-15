@@ -5,36 +5,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import static java.util.Collections.emptyList;
+
 public class TSPSolution {
-	
+
 	TSPInstance instance; // instance
 	ArrayList<Integer> perm; // solution representation (perm[i] is i-th point in tour)
 	int N; // a shorthand for the number of points
-	
+
 	// constructor
 	public TSPSolution(TSPInstance inst, boolean random) {
 		instance = inst;
 		N = instance.N;
-		
+
 		// initialize with the standard order
 		perm = new ArrayList<Integer>();
 		for (int i = 0; i < N; i++) {
 			perm.add(i);
 		}
-		
+
 		if (random) {
 			// randomize order
 			Random rand = new Random();
-			for (int i = 0; i < N-1; i++) {
-				int k = rand.nextInt(N-i) + i;
+			for (int i = 0; i < N - 1; i++) {
+				int k = rand.nextInt(N - i) + i;
 				Collections.swap(perm, i, k);
 			}
 		}
-		
+
 	}
-	
-	
-	
+
+
 	// copy the solution (if you want to keep track of the best solution found)
 	public TSPSolution copy() {
 		TSPSolution sol = new TSPSolution(instance, false);
@@ -43,15 +44,78 @@ public class TSPSolution {
 		}
 		return sol;
 	}
-	
-	
-	
-	// greedy algorithm that starts forming a tour with two random points and repeatedly inserts a random point in the best possible place in the tour
-	public void computeGreedy() {
-		
-		// TODO
-		
+
+	/*
+	 * Calculates total cost for trial solution for greedy algorithm format
+	 */
+	public double getCostGreedy(ArrayList<Integer> trialSol) {
+		double cost = 0;
+		for (int i = 0; i < trialSol.size(); i++) {
+			if (i + 1 >= trialSol.size()) {
+				cost += Pos.distance(instance.points.get(perm.get(i)), instance.points.get(perm.get(0)));
+			} else {
+				cost += Pos.distance(instance.points.get(perm.get(i)), instance.points.get(perm.get(i + 1)));
+			}
+		}
+		return cost;
 	}
+
+	public ArrayList<Integer> copyList(ArrayList<Integer> list1, ArrayList<Integer> list2) {
+		list1.clear();
+		list1.addAll(list2);
+		return list1;
+	}
+
+	// greedy algorithm that starts forming a tour with two random points and repeatedly inserts a random point in the best possible place in the tour
+	public ArrayList<Integer> computeGreedy() {
+
+		// TODO
+		ArrayList<Integer> solution = new ArrayList<>();
+
+		Random rand = new Random();
+		int k, l;
+		k = rand.nextInt(N);
+		l = rand.nextInt(N);
+		while (k == l) {
+			l = rand.nextInt(N);
+		}
+
+		solution.add(k);
+		solution.add(l);
+
+		ArrayList<Integer> previousSol = new ArrayList<>();
+		previousSol = copyList(previousSol, solution);
+		ArrayList<Integer> trialSol = new ArrayList<>();
+		ArrayList<Integer> bestSol = new ArrayList<>();
+		double bestTotalCost;
+		double newTotalCost;
+
+
+		while (bestSol.size() < N) { //while solution contains less elements than there are points
+			bestTotalCost = 100000000;
+
+
+			for (int i = 0; i < N; i++) {//loop over elements
+				if (!previousSol.contains(i)){ //solution does not already contain element
+					for (int j = 0; j < previousSol.size(); j++) { //loop over possible insertions
+						trialSol = copyList(trialSol, previousSol);
+
+						//try new position
+						trialSol.add(j, i);
+						newTotalCost = getCostGreedy(trialSol);
+						if (newTotalCost < bestTotalCost) {
+							bestTotalCost = newTotalCost;
+							bestSol = copyList(bestSol, trialSol);
+						}
+					}
+				}
+			}
+			previousSol = copyList(previousSol, bestSol);
+		}
+		solution = bestSol;
+		return solution;
+
+}
 	
 	
 	
@@ -59,7 +123,25 @@ public class TSPSolution {
 	public void apply2OPT(int i, int j) {
 		
 		// TODO
-		
+		ArrayList<Integer> newSol = new ArrayList<>();
+		//take all edges until i and add them to new solution
+		for (int a = 0; a < i-1; a++) {
+			newSol.add(a, perm.get(a));
+		}
+		newSol.add(j); // add first node of second edge
+		//add edges from i to j in reverse order
+		int dec = 0;
+		for (int b = i; b <= j ; b++) {
+			newSol.add(b, perm.get(j - dec));
+			dec++;
+		}
+
+		//take remaining nodes between j and i
+		for (int c = j+1; c < N; c++) {
+			newSol.add(c, perm.get(c));
+		}
+
+		perm = newSol;
 	}
 	
 	public void undo2OPT(int i, int j) {
