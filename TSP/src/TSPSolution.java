@@ -121,25 +121,21 @@ public class TSPSolution {
 	
 	// performs 2-opt move on i-th and j-th edge in tour
 	public void apply2OPT(int i, int j) {
-//		if (i > j) {
-//			int tmp = j;
-//			j = i;
-//			i = tmp;
-//		}
+
 		ArrayList<Integer> newSol = new ArrayList<>();
 		//take all edges until i and add them to new solution
 		for (int a = 0; a <= i; a++) {
 			newSol.add(perm.get(a));
 		}
-		newSol.add(perm.get(j)); // add first node of second edge
+
 		// add edges from i + 1 to j - 1 in reverse order
-		for (int b = j - 1; b >= i + 1 ; b--) {
-			newSol.add(newSol.size(), perm.get(b));
+		for (int b = j; b >= i + 1 ; b--) {
+			newSol.add(perm.get(b));
 		}
 
 		// Place remaining nodes
 		for (int c = j+1; c < N; c++) {
-			newSol.add(c, perm.get(c));
+			newSol.add(perm.get(c));
 		}
 		perm = newSol;
 	}
