@@ -3,10 +3,10 @@ import java.util.Random;
 public class Pizza {
 
 	public static void main(String[] args) {
-		String dataset = "small"; // choose the dataset
+		String dataset = "medium"; // choose the dataset
 		PizzaInstance inst = new PizzaInstance("data/" + dataset + ".txt"); // load the problem instance
 		PizzaSolution sol = new PizzaSolution(inst, true); // initialize a (random) solution
-		//sol.computeGreedy(); // run the original greedy algorithm
+		sol.computeGreedy(); // run the original greedy algorithm
 		//AntColonyOpt ants = new AntColonyOpt(inst.N, ..., ..., ..., ..., ...); // make object for Ant Colony Optimization
 		//sol.computeGreedy(ants); // run the ant colony greedy algorithm
 		//PizzaSolution sol = antColony(inst, ..., ..., ants); // perform ant colony optimization

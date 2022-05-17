@@ -80,8 +80,6 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
     // greedy algorithm that iteratively picks the most popular choice for an ingredient
     public void computeGreedy() {
     	
-    	// TODO: Extend this algorithm
-    	
     	int[][] ingrVotes = new int[M][2]; // how many customers (weighed by nr of orders) like (second index 0) or hate (second index 1) the ingredient
     	for (int i = 0; i < M; i++) {
     		for (Integer k: instance.lovers.get(i)) ingrVotes[i][0] += instance.prefs.get(k).nOrder;
@@ -93,29 +91,43 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
     	for (int i = 0; i < M; i++) remIngrs.add(i);
     	
     	for (int i = 0; i < M; i++) onPizza[i] = false; // reset to empty pizza
-    	
+
+		Random rand = new Random();
     	// main loop of greedy algorithm
     	while (remIngrs.size() > 0) {
     		
-    		// TODO: Replace best choice by random choice via roulette wheel selection
-    		
-    		// determine best choice
+    		// fitness proportionate selection
     		int ingr = 0;
     		boolean val = true;
-    		int mostVotes = -1;
-    		
+    		double totalWeight = 0;
+
+    		// Calculate the sum of the weights
     		for (Integer k: remIngrs) {
-    			if (ingrVotes[k][0] > mostVotes) {
-    				mostVotes = ingrVotes[k][0];
-    				ingr = k; val = true;
-    			}
-    			if (ingrVotes[k][1] > mostVotes) {
-    				mostVotes = ingrVotes[k][1];
-    				ingr = k; val = false;
-    			}    			
+    			totalWeight += ingrVotes[k][0] + ingrVotes[k][1];
     		}
-    		
-    		if (mostVotes <= 0) break; // stop if the remaining customers don't care about the remaining ingredients		
+
+			if (totalWeight <= 0) break; // stop if the remaining customers don't care about the remaining ingredients
+
+    		// Calculate cumulative probabilities and when we find that x < a_j, we pick that option.
+			double uniformly_random = rand.nextDouble();
+			double cumulativeProbability = 0;
+			for (Integer k: remIngrs) {
+				// Add chance of adding ingredient k
+				cumulativeProbability += ingrVotes[k][0] / totalWeight;
+				if (uniformly_random < cumulativeProbability) {
+					val = true;
+					ingr = k;
+					break;
+				};
+				// Add chance of not adding ingredient k
+				cumulativeProbability += ingrVotes[k][1] / totalWeight;
+				if (uniformly_random < cumulativeProbability) {
+					val = false;
+					ingr = k;
+					break;
+				};
+			}
+
     		
     		onPizza[ingr] = val; // set value according to greedy choice
     		remIngrs.remove(ingr); // remove ingredient from set	
