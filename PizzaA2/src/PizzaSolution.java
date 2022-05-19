@@ -149,8 +149,71 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
     
     // greedy algorithm for ant colony optimization
     public void computeGreedy(AntColonyOpt ants) {
-    	
-    	// TODO
+
+		int[][] ingrVotes = new int[M][2]; // how many customers (weighed by nr of orders) like (second index 0) or hate (second index 1) the ingredient
+		for (int i = 0; i < M; i++) {
+			for (Integer k: instance.lovers.get(i)) ingrVotes[i][0] += instance.prefs.get(k).nOrder;
+			for (Integer k: instance.haters.get(i)) ingrVotes[i][1] += instance.prefs.get(k).nOrder;
+		}
+
+		boolean[] eliminated = new boolean[N]; // keep track of which customers have already been "eliminated"
+		TreeSet<Integer> remIngrs = new TreeSet<Integer>(); // the set of ingredients for which we have not made a decision yet
+		for (int i = 0; i < M; i++) remIngrs.add(i);
+
+		for (int i = 0; i < M; i++) onPizza[i] = false; // reset to empty pizza
+
+		Random rand = new Random();
+		// main loop of greedy algorithm
+		while (remIngrs.size() > 0) {
+
+			// fitness proportionate selection
+			int ingr = 0;
+			boolean val = true;
+			double totalWeight = 0;
+
+			// Calculate the sum of the weights
+			for (Integer k: remIngrs) {
+				totalWeight += ants.getPreference(k, 0, ingrVotes[k][0]) + ants.getPreference(k, 1, ingrVotes[k][0]);
+			}
+
+			if (totalWeight <= 0) break; // stop if the remaining customers don't care about the remaining ingredients
+
+			// Calculate cumulative probabilities and when we find that x < a_j, we pick that option.
+			double uniformly_random = rand.nextDouble();
+			double cumulativeProbability = 0;
+			for (Integer k: remIngrs) {
+				// Add chance of adding ingredient k
+				cumulativeProbability += ants.getPreference(k, 0, ingrVotes[k][0]) / totalWeight;
+				if (uniformly_random < cumulativeProbability) {
+					val = true;
+					ingr = k;
+					break;
+				};
+				// Add chance of not adding ingredient k
+				cumulativeProbability += ants.getPreference(k, 1, ingrVotes[k][1]) / totalWeight;
+				if (uniformly_random < cumulativeProbability) {
+					val = false;
+					ingr = k;
+					break;
+				};
+			}
+
+
+			onPizza[ingr] = val; // set value according to greedy choice
+			remIngrs.remove(ingr); // remove ingredient from set
+
+			for (Integer k: (val ? instance.haters.get(ingr) : instance.lovers.get(ingr))) { // eliminate all customers that hate/love ingredient and update ingredient counts
+				if (eliminated[k]) continue;
+				eliminated[k] = true;
+				for (Integer x: instance.prefs.get(k).likes) ingrVotes[x][0] -= instance.prefs.get(k).nOrder;
+				for (Integer x: instance.prefs.get(k).hates) ingrVotes[x][1] -= instance.prefs.get(k).nOrder;
+			}
+
+		}
+
+		recomputeConflicts(); // recompute the conflicts
+
+		addPheromones(ants, ants.Q * getCost());
     	
     }
     

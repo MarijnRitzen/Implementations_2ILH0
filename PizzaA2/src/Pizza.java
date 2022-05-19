@@ -3,13 +3,13 @@ import java.util.Random;
 public class Pizza {
 
 	public static void main(String[] args) {
-		String dataset = "medium"; // choose the dataset
+		String dataset = "difficult"; // choose the dataset
 		PizzaInstance inst = new PizzaInstance("data/" + dataset + ".txt"); // load the problem instance
-		PizzaSolution sol = new PizzaSolution(inst, true); // initialize a (random) solution
-		sol.computeGreedy(); // run the original greedy algorithm
-		//AntColonyOpt ants = new AntColonyOpt(inst.N, ..., ..., ..., ..., ...); // make object for Ant Colony Optimization
+		//PizzaSolution sol = new PizzaSolution(inst, true); // initialize a (random) solution
+		//sol.computeGreedy(); // run the original greedy algorithm
+		AntColonyOpt ants = new AntColonyOpt(inst.N, 1, 1, 0.5, 0.1, 1.0 / inst.M); // make object for Ant Colony Optimization
 		//sol.computeGreedy(ants); // run the ant colony greedy algorithm
-		//PizzaSolution sol = antColony(inst, ..., ..., ants); // perform ant colony optimization
+		PizzaSolution sol = antColony(inst, 10, 1000, ants); // perform ant colony optimization
 		//PizzaSolution sol = antColonyRank(inst, ..., ..., ants); // perform ant colony optimization with rank-based pheromone depositing
 		//PizzaSolution sol = geneticAlg(inst, ..., ..., ...); // perform the genetic algorithm
 		System.out.println("Cost = " + sol.getCost()); // output the cost
@@ -22,10 +22,29 @@ public class Pizza {
 	
 	// perform ant colony optimization with [nAnts] ants and [nIter] iterations/rounds
 	public static PizzaSolution antColony(PizzaInstance inst, int nAnts, int nIter, AntColonyOpt ants) {
+		// Solution to run all the iterations
+		PizzaSolution sol = new PizzaSolution(inst, true);
+
+		// Keep track of best solution
+		PizzaSolution bestSol = sol.copy();
+		double bestCost = bestSol.getCost();
 		
-		PizzaSolution bestSol = new PizzaSolution(inst, true);
-		
-		// TODO
+		for (int round = 0; round < nIter; round++) {
+
+			ants.initRound();
+
+			for (int ant = 0; ant < nAnts; ant++) {
+				sol.computeGreedy(ants); // run the ant colony greedy algorithm
+			}
+
+			ants.concludeRound();
+
+			if (sol.getCost() > bestCost) {
+				bestCost = sol.getCost();
+				bestSol = sol.copy();
+			}
+
+		}
 		
 		return bestSol;
 	}
