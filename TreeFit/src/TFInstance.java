@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TFInstance {
 
@@ -23,7 +20,7 @@ public class TFInstance {
 		
 		File file = new File(filename);
 		try {
-			Scanner scan = new Scanner(file);
+			Scanner scan = new Scanner(file).useLocale(Locale.US);
 			pts = new ArrayList<Pos>();
 			
 			k = scan.nextInt(); // number of points in tree

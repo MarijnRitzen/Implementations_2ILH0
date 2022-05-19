@@ -5,13 +5,14 @@ public class TreeFit {
 	public static void main(String[] args) {
 		String dataset = "3split"; // choose the dataset
 		TFInstance inst = new TFInstance("data/" + dataset + ".txt"); // load the problem instance
-		TFSolution sol = new TFSolution(inst, true); // initialize a (random) solution
-		//TFSolution sol = particleSwarm(inst, ..., ..., ..., ..., ...); // perform particle swarm optimization
+		//TFSolution sol = new TFSolution(inst, true); // initialize a (random) solution
+		TFSolution sol = particleSwarm(inst, 20,1000, 1, 1.6, 0.85); // perform particle swarm optimization
 		//TFSolution sol = evolStrategy(inst, ..., ..., ..., ..., ...); // perform evolutionary strategy
 		//TFSolution sol = evolStrategyHybrid(inst, ..., ..., ..., ..., ...); // perform hybrid evolutionary strategy
 		System.out.println("Cost = " + sol.getCost()); // output the cost
 		sol.output("output/" + dataset + ".out"); // output the solution
 		sol.visualize("figures/" + dataset + ".ipe"); // visualize the solution
+
 	}
 	
 	

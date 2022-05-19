@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Particle {
 
@@ -6,6 +7,7 @@ public class Particle {
 	TFSolution sol; // the corresponding solution of the particle
 	ArrayList<Pos> velocity; // velocities of each of the points
 	ArrayList<Pos> best; // best solution found by particle
+	Random rand;
 	double bestCost; // cost of the best solution found by this particle
 	
 	// constructor
@@ -18,6 +20,7 @@ public class Particle {
 			velocity.add(new Pos(0.0, 0.0));
 		}
 		bestCost = sol.getCost();
+		this.rand = new Random();
 	}
 	
 	
@@ -56,7 +59,25 @@ public class Particle {
 	// perform one iteration for this particle and update its personal best solution
 	public void update() {
 		
-		// TODO
+		for (int i = 0; i < sol.K; i++) { // For every point in solution
+			// For every dimension of one of the points, update the velocity
+			velocity.get(i).x = pso.cIn * velocity.get(i).x + pso.cCog * rand.nextDouble() * (best.get(i).x - sol.getPoint(i).x)
+					+ pso.cSoc * rand.nextDouble() * (pso.getBestSolution().getPoint(i).x - sol.getPoint(i).x);
+			velocity.get(i).y = pso.cIn * velocity.get(i).y + pso.cCog * rand.nextDouble() * (best.get(i).y - sol.getPoint(i).y)
+					+ pso.cSoc * rand.nextDouble() * (pso.getBestSolution().getPoint(i).y - sol.getPoint(i).y);
+
+			// Next update the positions
+			double x = sol.getPoint(i).x + velocity.get(i).x;
+			double y = sol.getPoint(i).y + velocity.get(i).y;
+			sol.setPoint(i, new Pos(x, y));
+		}
+
+		if (sol.getCost() < bestCost) {
+			bestCost = sol.cost;
+			for (int i = 0; i < sol.K; i++) {
+				best.set(i, sol.getPoint(i));
+			}
+		}
 		
 	}
 	

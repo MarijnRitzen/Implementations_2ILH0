@@ -40,9 +40,22 @@ public class ParticleSwarmOpt {
 	// perform one iteration of the Particle Swarm Optimization 
 	// You should also update globalBest if necessary (make sure to make a copy, not just copy the pointer!)
 	public void updatePSO() {
-		
-		// TODO
-		
+
+		TFSolution toUpdateSolution = null;
+		double toUpdateSolutionCost = Double.MAX_VALUE;
+
+		for (Particle particle : parts) {
+			particle.update();
+			if (particle.sol.getCost() < globalBestCost) {
+				toUpdateSolution = particle.sol.copy();
+				toUpdateSolutionCost = particle.sol.cost;
+			}
+		}
+
+		if (toUpdateSolution != null) {
+			globalBest = toUpdateSolution;
+			globalBestCost = toUpdateSolutionCost;
+		}
 	}
 	
 }
