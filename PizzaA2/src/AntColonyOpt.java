@@ -25,8 +25,11 @@ public class AntColonyOpt {
 	
 	// initalize a round (iteration) of the ant colony optimization algorithm
 	public void initRound() {
-		
-		// TODO
+
+		for (int i = 0; i < M; i++) {
+			deltaPher[i][0] = 0;
+			deltaPher[i][1] = 0;
+		}
 		
 	}
 	
@@ -34,25 +37,24 @@ public class AntColonyOpt {
 	// add pheromone to a greedy choice of adding/omitting an ingredient
 	public void addPheromone(int i, int val, double amount) {
 
-		// TODO
+		deltaPher[i][val] += amount;
 		
 	}
 	
 	
 	// compute the preference for adding/omitting an ingredient
 	public double getPreference(int i, int val, double attractiveness) {
-		
-		// TODO
-		
-		return 0.0;
-		
+		return Math.pow(pher[i][val], alpha) * Math.pow(attractiveness, beta);
 	}
 	
 	
 	// conclude a round (iteration) of the ant colony optimization algorithm
 	public void concludeRound() {
-		
-		// TODO
+
+		for (int i = 0; i < M; i++) {
+			pher[i][0] = (1.0 - rho) * pher[i][0] + deltaPher[i][0]; // initialize pheromone levels
+			pher[i][1] = (1.0 - rho) * pher[i][1] + deltaPher[i][1];;
+		}
 		
 	}
 	
