@@ -44,8 +44,26 @@ public class TreeFit {
 		
 		TFSolution best = new TFSolution(inst, true);
 		best.setStDev(initStDev); // this is how you initialize the standard deviation
-		
-		// TODO
+
+		// Creating starting population
+		TFSolution[] population = new TFSolution[lambda];
+
+		for (int individual = 0; individual < lambda; individual++) {
+			population[individual] = new TFSolution(inst, true);
+		}
+
+		// Loop over nIter generations
+		for (int generation = 0; generation < nIter; generation++) {
+
+			// Selection
+
+
+			// Mutation
+
+			// Update population
+		}
+
+
 		
 		return best;
 	}

@@ -70,6 +70,7 @@ public class Particle {
 			double x = sol.getPoint(i).x + velocity.get(i).x;
 			double y = sol.getPoint(i).y + velocity.get(i).y;
 			sol.setPoint(i, new Pos(x, y));
+			clipPoint(i);
 		}
 
 		if (sol.getCost() < bestCost) {
