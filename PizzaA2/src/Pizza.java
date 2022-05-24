@@ -40,7 +40,7 @@ public class Pizza {
 			ants.concludeRound();
 
 			if (sol.getCost() > bestCost) {
-				bestCost = sol.getCost();
+				bestCost = sol.cost;
 				bestSol = sol.copy();
 			}
 
