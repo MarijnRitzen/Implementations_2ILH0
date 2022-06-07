@@ -52,8 +52,8 @@ public class AntColonyOpt {
 	public void concludeRound() {
 
 		for (int i = 0; i < M; i++) {
-			pher[i][0] = (1.0 - rho) * pher[i][0] + deltaPher[i][0]; // initialize pheromone levels
-			pher[i][1] = (1.0 - rho) * pher[i][1] + deltaPher[i][1];;
+			pher[i][0] = (1.0 - rho) * pher[i][0] + deltaPher[i][0];
+			pher[i][1] = (1.0 - rho) * pher[i][1] + deltaPher[i][1];
 		}
 		
 	}

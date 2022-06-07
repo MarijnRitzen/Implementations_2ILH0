@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class TFSolution implements Comparable<TFSolution> {
 
@@ -12,6 +13,7 @@ public class TFSolution implements Comparable<TFSolution> {
 	int N; // a shorthand for the number of points in dataset
 	double cost; // cost of last call of getCost
 	double stDev; // standard deviation for evolution strategy
+	Random rand;
 	
 	// constructor
 	public TFSolution(TFInstance inst, boolean random) {
@@ -30,6 +32,8 @@ public class TFSolution implements Comparable<TFSolution> {
 			Pos p = inst.points.get(A.get(i));
 			tree.add(new Pos(p.x, p.y));
 		}
+
+		rand = new Random();
 		
 	}
 	
@@ -93,8 +97,17 @@ public class TFSolution implements Comparable<TFSolution> {
 	
 	// mutate point coordinates with radius [r] (you may choose your own distribution)
 	public void mutate(double r) {
-		
-		// TODO
+
+		for (int i = 0; i < K; i++) {
+			Pos node = tree.get(i);
+
+			node.x = node.x + rand.nextGaussian() * r;
+			node.y = node.y + rand.nextGaussian() * r;
+
+			tree.set(i, node);
+
+			clipPoint(i);
+		}
 		
 	}
 	

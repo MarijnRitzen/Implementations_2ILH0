@@ -17,10 +17,20 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
 	// static functions
 	public static PizzaSolution crossover(PizzaSolution sol1, PizzaSolution sol2) {
 		PizzaSolution sol = new PizzaSolution(sol1.instance, false);
+
+		int crossoverSize = rand.nextInt(sol1.M);
+
+		// Copy start of sol1 to sol
+		for (int i = 0; i < crossoverSize; i++) {
+			sol.onPizza[i] = sol1.onPizza[i];
+		}
+
+		// Copy tail of sol2 to sol
+		for (int i = crossoverSize; i < sol1.M; i++) {
+			sol.onPizza[i] = sol2.onPizza[i];
+		}
 		
-		// TODO
-		
-		//sol.recomputeConflicts(); Fix the nConflicts array, if necessary
+		sol.recomputeConflicts(); //Fix the nConflicts array, if necessary
 		
 		return sol;
 	}
@@ -32,6 +42,7 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
 	int M; // a shorthand for the number of ingredients
 	double cost; // cost of most recent call to getCost
 	int[] nConflicts; // the number of conflicts per customer
+	static Random rand;
 	
 	
 	// constructor
@@ -59,6 +70,8 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
 			for (int k: pp.getHates()) if (onPizza[k]) r++;
 			nConflicts[j] = r;
 		}
+
+		rand = new Random();
 		
 	}
 	
@@ -212,8 +225,6 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
 		}
 
 		recomputeConflicts(); // recompute the conflicts
-
-		addPheromones(ants, ants.Q * getCost());
     	
     }
     
@@ -231,7 +242,8 @@ public class PizzaSolution implements Comparable<PizzaSolution> {
 	// mutate current solution
 	public void mutate() {
 		
-		// TODO
+		swapIngredient(rand.nextInt(M));
+		recomputeConflicts();
 		
 	}
     
